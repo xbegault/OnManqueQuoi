@@ -1,7 +1,7 @@
-var express = require('express')
+var express = require('express');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/onmangequoicemidi');
+mongoose.connect('mongodb://mongodb:27017/onmangequoicemidi');
 
 var FoodPointSchema = new mongoose.Schema({
   	name: String,
@@ -35,6 +35,7 @@ app.post('/vote/:id', function (req, res) {
 		});
 	res.json();
 })
+
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!')

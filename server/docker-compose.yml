@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+    mongodb:
+        image: mongo:3.4
+        container_name: mongodb
+        ports:
+            - "27017:27017"
+    node:
+        image: node:7.3.0-onbuild
+        container_name: node
+        volumes:
+            - .:/usr/src/app
+        ports:
+            - "3000:3000"
+        links:
+            - mongodb:mongo

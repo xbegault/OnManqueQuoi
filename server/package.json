@@ -4,6 +4,7 @@
   "description": "Server with OnMangeQuoi",
   "main": "index.js",
   "scripts": {
+    "start": "npm install && nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Xavier B.",
@@ -12,6 +13,7 @@
     "express": "^4.14.0"
   },
   "dependencies": {
-    "mongoose": "^4.7.1"
+    "mongoose": "^4.7.1",
+    "nodemon": "^1.11.0"
   }
 }
