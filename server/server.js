@@ -1,45 +1,32 @@
 var express = require('express');
-var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://mongodb:27017/onmangequoicemidi');
+var db = require('./config/db');
 
-var FoodPointSchema = new mongoose.Schema({
-  	name: String,
-  	created_at: { type: Date, default: Date.now },
-  	updated_at: { type: Date, default: Date.now },
-});
+var model = require('./db/model')(db);
+var FoodPointModel = model.FoodPointModel;
+var VoteFoodPointModel = model.VoteFoodPointModel;
 
-var VoteFoodPointSchema = new mongoose.Schema({
-	foodPoint: FoodPointSchema,
-  	created_at: { type: Date, default: Date.now },
-});
-
-// Create a model based on the schema
-var FoodPointModel = mongoose.model('foodPoint', FoodPointSchema);
-var VoteFoodPointModel = mongoose.model('voteFoodPoint', VoteFoodPointSchema);
-
-var app = express()
+var app = express();
 
 app.post('/food-point', function (req, res) {
 	foodPoint = new FoodPointModel(req.body).save(function (err) {
-		if (err) { throw err; }
+		if (err) { console.log(err); throw err; }
 			console.log("Food point created");
 		});
-	res.json();
-})
+	res.json(foodPoint);
+});
 
 app.post('/vote/:id', function (req, res) {
 	restaurant = new VoteFoodPointModel(req.body).save(function (err) {
 		if (err) { throw err; }
 			console.log("Food point created");
 		});
-	res.json();
-})
-
+	res.json(restaurant);
+});
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
-})
+  console.log('Server listening on port 3000!')
+});
 
 
 
