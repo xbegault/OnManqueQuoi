@@ -1,4 +1,5 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 
 var db = require('./config/db');
 
@@ -7,21 +8,28 @@ var FoodPointModel = model.FoodPointModel;
 var VoteFoodPointModel = model.VoteFoodPointModel;
 
 var app = express();
+app.use(bodyParser.json());
+
+app.get('/food-points', function (req, res) {
+     FoodPointModel.find(function (err, foodPoints) {
+        if (err) { console.log(err); res.sendStatus(400); throw err; }
+        res.json(foodPoints);
+    });
+});
+
 
 app.post('/food-point', function (req, res) {
-	foodPoint = new FoodPointModel(req.body).save(function (err) {
-		if (err) { console.log(err); throw err; }
-			console.log("Food point created");
+	foodPoint = new FoodPointModel({"name":"test"}).save(function (err) {
+		if (err) { console.log(err); res.sendStatus(400); throw err; }
+        	res.sendStatus(200);
 		});
-	res.json(foodPoint);
 });
 
 app.post('/vote/:id', function (req, res) {
 	restaurant = new VoteFoodPointModel(req.body).save(function (err) {
-		if (err) { throw err; }
-			console.log("Food point created");
+		if (err) { res.sendStatus(400); throw err; }
+        	res.sendStatus(200);
 		});
-	res.json(restaurant);
 });
 
 app.listen(3000, function () {
