@@ -15,3 +15,6 @@ services:
             - "3000:3000"
         links:
             - mongodb:mongo
+    visualizer:
+        image: dockersamples/visualizer
+        container_name: visualizer
